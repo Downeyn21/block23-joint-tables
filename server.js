@@ -54,9 +54,10 @@ app.post("/api/users/:id/vacations", async (req, res, next) => {
 app.delete("/api/users/:userId/vacations/:id", async (req, res, next) => {
   try {
     const id = +req.params.id;
+    const userId = +req.params.userId;
 
     const vacationExists = await prisma.vacation.findFirst({
-      where: { id },
+      where: { id, userId },
     });
 
     if (!vacationExists) {
