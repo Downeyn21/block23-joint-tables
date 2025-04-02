@@ -63,12 +63,13 @@ app.delete("/api/users/:userId/vacations/:id", async (req, res, next) => {
     if (!vacationExists) {
       return next({
         status: 404,
-        message: `Could not find vacation with id ${id}.`,
+        message: `Could not find vacation with id ${id} for user ${userId}.`,
       });
     }
-    await prisma.vacation.delete({ where: { id } });
+
+    await prisma.vacation.delete({ where: { id, userId } });
     res.sendStatus(204);
-  } catch (err) {
+  } catch (error) {
     next();
   }
 });
